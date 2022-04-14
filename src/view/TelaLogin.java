@@ -5,6 +5,15 @@
  */
 package view;
 
+import dal.Conexao;
+import model.Funcionario;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author janae
@@ -32,8 +41,8 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        TelaLoginUsuario = new javax.swing.JTextField();
-        TelaLoginCampoSenha = new javax.swing.JPasswordField();
+        TXTLoginUsuario = new javax.swing.JTextField();
+        TXTLoginCampoSenha = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -50,6 +59,11 @@ public class TelaLogin extends javax.swing.JFrame {
         BotaoEntrar.setForeground(new java.awt.Color(50, 205, 50));
         BotaoEntrar.setText("Entrar");
         BotaoEntrar.setMargin(new java.awt.Insets(5, 14, 2, 14));
+        BotaoEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoEntrarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Yu Gothic", 1, 18)); // NOI18N
         jLabel2.setText("Oficina Mecanica");
@@ -60,6 +74,12 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Login :");
         jLabel3.setToolTipText("");
+
+        TXTLoginCampoSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TXTLoginCampoSenhaActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(50, 205, 50));
@@ -131,8 +151,8 @@ public class TelaLogin extends javax.swing.JFrame {
                                 .addComponent(jLabel6)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TelaLoginCampoSenha)
-                            .addComponent(TelaLoginUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TXTLoginCampoSenha)
+                            .addComponent(TXTLoginUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -173,13 +193,13 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(TelaLoginUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TXTLoginUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(TelaLoginCampoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TXTLoginCampoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4))
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
@@ -194,6 +214,70 @@ public class TelaLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
+    private void TXTLoginCampoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTLoginCampoSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TXTLoginCampoSenhaActionPerformed
+
+    private void BotaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEntrarActionPerformed
+        Funcionario func = new Funcionario();
+        func.setNome(TXTLoginUsuario.getText());
+        func.setSenha(TXTLoginCampoSenha.getText());
+        ResultSet rsUsuario = autenticacaoUsuario(func.getNome(), func.getSenha());
+        
+        try {
+            if (rsUsuario.next()) {
+                switch (rsUsuario.getString(4)) {
+                    case "Gerente" -> {
+                        TelaGerente gen = new TelaGerente();
+                        gen.setVisible(true);
+                        dispose();
+                    }
+                    case "Mecanico" -> {
+                        TelaMecanico mec = new TelaMecanico();
+                        mec.setVisible(true);
+                        dispose();
+                    }
+                    case "Atendente" -> {
+                        TelaAtendente aten = new TelaAtendente();
+                        aten.setVisible(true);
+                        dispose();
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario e senha incorreta");
+            }
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        }
+
+    }//GEN-LAST:event_BotaoEntrarActionPerformed
+    
+    public ResultSet autenticacaoUsuario(String nome, String senha) {
+        Connection conn = new Conexao().connect();
+        try {
+            String sql = "select * from tbl_funcionario where Nome = ? and Senha = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setString(1, nome);
+            pstm.setString(2, senha);
+            
+            ResultSet rs = pstm.executeQuery();
+            return rs;
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, erro);
+            return null;
+        }
+    }
+
+    /*
+    public ResultSet autenticarCargo() {
+        Connection conn = new Conexao().connect();
+        try {
+            String sql = "";
+            return rs;
+        } catch (SQLException e) {
+            return null;
+        }
+    } */
     /**
      * @param args the command line arguments
      */
@@ -231,8 +315,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoEntrar;
-    private javax.swing.JPasswordField TelaLoginCampoSenha;
-    private javax.swing.JTextField TelaLoginUsuario;
+    private javax.swing.JPasswordField TXTLoginCampoSenha;
+    private javax.swing.JTextField TXTLoginUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

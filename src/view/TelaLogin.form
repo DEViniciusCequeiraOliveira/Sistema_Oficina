@@ -64,8 +64,8 @@
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="TelaLoginCampoSenha" max="32767" attributes="0"/>
-                          <Component id="TelaLoginUsuario" min="-2" pref="138" max="-2" attributes="0"/>
+                          <Component id="TXTLoginCampoSenha" max="32767" attributes="0"/>
+                          <Component id="TXTLoginUsuario" min="-2" pref="138" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   </Group>
@@ -120,7 +120,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="TelaLoginUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="TXTLoginUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -128,7 +128,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="TelaLoginCampoSenha" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="TXTLoginCampoSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
@@ -156,6 +156,9 @@
           <Insets value="[5, 14, 2, 14]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoEntrarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
     </Component>
@@ -183,9 +186,12 @@
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="TelaLoginUsuario">
+    <Component class="javax.swing.JTextField" name="TXTLoginUsuario">
     </Component>
-    <Component class="javax.swing.JPasswordField" name="TelaLoginCampoSenha">
+    <Component class="javax.swing.JPasswordField" name="TXTLoginCampoSenha">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TXTLoginCampoSenhaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
