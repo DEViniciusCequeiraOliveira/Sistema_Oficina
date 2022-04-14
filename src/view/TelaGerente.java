@@ -27,12 +27,12 @@ public class TelaGerente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        BotaofunciGerente = new javax.swing.JButton();
+        btnGerenFuncio = new javax.swing.JButton();
         BotaoOrdenGerente = new javax.swing.JButton();
         ButaoClienteGerente = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -40,12 +40,13 @@ public class TelaGerente extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1080, 720));
 
-        jButton1.setBackground(new java.awt.Color(51, 255, 51));
-        jButton1.setText("Voltar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSair.setBackground(new java.awt.Color(51, 255, 51));
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSairActionPerformed(evt);
             }
         });
 
@@ -67,19 +68,32 @@ public class TelaGerente extends javax.swing.JFrame {
         jLabel1.setText("Gerente");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/gerentes 128px.png"))); // NOI18N
+        jLabel2.setAlignmentY(0.0F);
 
-        BotaofunciGerente.setBackground(new java.awt.Color(0, 204, 51));
-        BotaofunciGerente.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        BotaofunciGerente.setForeground(new java.awt.Color(50, 205, 50));
-        BotaofunciGerente.setText("Funçionarios");
+        btnGerenFuncio.setBackground(new java.awt.Color(0, 204, 51));
+        btnGerenFuncio.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        btnGerenFuncio.setForeground(new java.awt.Color(255, 255, 255));
+        btnGerenFuncio.setText("Funcionarios");
+        btnGerenFuncio.setActionCommand("Funcionarios");
+        btnGerenFuncio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerenFuncioActionPerformed(evt);
+            }
+        });
 
         BotaoOrdenGerente.setBackground(new java.awt.Color(0, 204, 51));
-        BotaoOrdenGerente.setForeground(new java.awt.Color(50, 205, 50));
-        BotaoOrdenGerente.setText("Orden de Serviço");
+        BotaoOrdenGerente.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        BotaoOrdenGerente.setForeground(new java.awt.Color(255, 255, 255));
+        BotaoOrdenGerente.setText("Ordem de Serviço");
+        BotaoOrdenGerente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoOrdenGerenteActionPerformed(evt);
+            }
+        });
 
-        ButaoClienteGerente.setBackground(new java.awt.Color(0, 153, 51));
-        ButaoClienteGerente.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        ButaoClienteGerente.setForeground(new java.awt.Color(50, 205, 50));
+        ButaoClienteGerente.setBackground(new java.awt.Color(1, 200, 50));
+        ButaoClienteGerente.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        ButaoClienteGerente.setForeground(new java.awt.Color(255, 255, 255));
         ButaoClienteGerente.setText("Clientes");
         ButaoClienteGerente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,7 +118,7 @@ public class TelaGerente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnSair)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jToggleButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -113,19 +127,23 @@ public class TelaGerente extends javax.swing.JFrame {
                         .addGap(131, 131, 131)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ButaoClienteGerente, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(BotaofunciGerente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BotaoOrdenGerente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(jLabel1)))
-                        .addGap(0, 178, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(17, 17, 17)
+                                        .addComponent(jLabel1))
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(ButaoClienteGerente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnGerenFuncio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(BotaoOrdenGerente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -133,42 +151,61 @@ public class TelaGerente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
+                        .addComponent(btnSair)
                         .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addComponent(jLabel2)
-                .addGap(36, 36, 36)
+                .addGap(43, 43, 43)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel1)
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(BotaofunciGerente))
-                .addGap(34, 34, 34)
+                    .addComponent(btnGerenFuncio))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BotaoOrdenGerente)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BotaoOrdenGerente)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(ButaoClienteGerente)))
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ButaoClienteGerente)
-                    .addComponent(jLabel5))
                 .addGap(30, 30, 30))
         );
+
+        btnGerenFuncio.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        TelaLogin tlLogin = new TelaLogin();
+        tlLogin.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void ButaoClienteGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoClienteGerenteActionPerformed
-        // TODO add your handling code here:
+        VerCliente verClien = new VerCliente();
+        verClien.setVisible(true);
+        dispose();
     }//GEN-LAST:event_ButaoClienteGerenteActionPerformed
+
+    private void BotaoOrdenGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoOrdenGerenteActionPerformed
+        OrdemDeServico ordServ = new OrdemDeServico();
+        ordServ.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_BotaoOrdenGerenteActionPerformed
+
+    private void btnGerenFuncioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenFuncioActionPerformed
+        GerenciamentoDosFuncionarios genFunc = new GerenciamentoDosFuncionarios();
+        genFunc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnGerenFuncioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,11 +242,12 @@ public class TelaGerente extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoOrdenGerente;
-    private javax.swing.JButton BotaofunciGerente;
     private javax.swing.JButton ButaoClienteGerente;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnGerenFuncio;
+    private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

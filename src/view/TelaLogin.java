@@ -267,17 +267,6 @@ public class TelaLogin extends javax.swing.JFrame {
             return null;
         }
     }
-
-    /*
-    public ResultSet autenticarCargo() {
-        Connection conn = new Conexao().connect();
-        try {
-            String sql = "";
-            return rs;
-        } catch (SQLException e) {
-            return null;
-        }
-    } */
     /**
      * @param args the command line arguments
      */
