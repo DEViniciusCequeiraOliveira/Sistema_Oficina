@@ -173,7 +173,6 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Funcionarios"/>
-        <Property name="actionCommand" type="java.lang.String" value="Funcionarios"/>
       </Properties>
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>

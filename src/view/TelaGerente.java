@@ -74,7 +74,6 @@ public class TelaGerente extends javax.swing.JFrame {
         btnGerenFuncio.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         btnGerenFuncio.setForeground(new java.awt.Color(255, 255, 255));
         btnGerenFuncio.setText("Funcionarios");
-        btnGerenFuncio.setActionCommand("Funcionarios");
         btnGerenFuncio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGerenFuncioActionPerformed(evt);
