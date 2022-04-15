@@ -80,7 +80,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         setTitle("Gerenciar Funcionários");
         setResizable(false);
 
-        jButton3.setBackground(new java.awt.Color(51, 255, 51));
+        jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setText("Voltar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +107,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jLabel6.setText("CPF :");
 
-        btnAdicionar.setBackground(new java.awt.Color(51, 153, 0));
+        btnAdicionar.setBackground(new java.awt.Color(204, 204, 204));
         btnAdicionar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -116,11 +116,11 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(51, 153, 0));
+        jButton4.setBackground(new java.awt.Color(204, 204, 204));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton4.setText("Editar");
 
-        jButton5.setBackground(new java.awt.Color(51, 153, 0));
+        jButton5.setBackground(new java.awt.Color(204, 204, 204));
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton5.setText("Deletar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +129,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setBackground(new java.awt.Color(51, 153, 0));
+        jButton6.setBackground(new java.awt.Color(204, 204, 204));
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton6.setText("Limpar Campos");
 

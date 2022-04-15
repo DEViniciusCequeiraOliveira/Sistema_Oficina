@@ -39,8 +39,9 @@ public class TelaGerente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1080, 720));
+        setResizable(false);
 
-        btnSair.setBackground(new java.awt.Color(51, 255, 51));
+        btnSair.setBackground(new java.awt.Color(204, 204, 204));
         btnSair.setText("Sair");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -48,17 +49,15 @@ public class TelaGerente extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(0, 204, 0));
+        jLabel1.setBackground(new java.awt.Color(204, 204, 204));
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(50, 205, 50));
         jLabel1.setText("Gerente");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/gerentes 128px.png"))); // NOI18N
         jLabel2.setAlignmentY(0.0F);
 
-        btnGerenFuncio.setBackground(new java.awt.Color(0, 204, 51));
+        btnGerenFuncio.setBackground(new java.awt.Color(204, 204, 204));
         btnGerenFuncio.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
-        btnGerenFuncio.setForeground(new java.awt.Color(255, 255, 255));
         btnGerenFuncio.setText("Funcionarios");
         btnGerenFuncio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,9 +65,8 @@ public class TelaGerente extends javax.swing.JFrame {
             }
         });
 
-        BotaoOrdenGerente.setBackground(new java.awt.Color(0, 204, 51));
+        BotaoOrdenGerente.setBackground(new java.awt.Color(204, 204, 204));
         BotaoOrdenGerente.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
-        BotaoOrdenGerente.setForeground(new java.awt.Color(255, 255, 255));
         BotaoOrdenGerente.setText("Ordem de Serviço");
         BotaoOrdenGerente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,9 +74,8 @@ public class TelaGerente extends javax.swing.JFrame {
             }
         });
 
-        ButaoClienteGerente.setBackground(new java.awt.Color(1, 200, 50));
+        ButaoClienteGerente.setBackground(new java.awt.Color(204, 204, 204));
         ButaoClienteGerente.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
-        ButaoClienteGerente.setForeground(new java.awt.Color(255, 255, 255));
         ButaoClienteGerente.setText("Clientes");
         ButaoClienteGerente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,6 +152,7 @@ public class TelaGerente extends javax.swing.JFrame {
         btnGerenFuncio.getAccessibleContext().setAccessibleDescription("");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed

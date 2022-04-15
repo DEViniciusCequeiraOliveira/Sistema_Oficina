@@ -46,12 +46,22 @@ public class TelaRecepcionista extends javax.swing.JFrame {
         BotãoRegistrarCliente.setBackground(new java.awt.Color(204, 204, 204));
         BotãoRegistrarCliente.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         BotãoRegistrarCliente.setText("Registrar Clientes");
+        BotãoRegistrarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotãoRegistrarClienteActionPerformed(evt);
+            }
+        });
 
         BotãoOrcamento.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         BotãoOrcamento.setText("Orçamentos");
+        BotãoOrcamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotãoOrcamentoActionPerformed(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setText("Voltar");
+        jButton1.setText("Sair");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -102,7 +112,24 @@ public class TelaRecepcionista extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        TelaLogin tl = new TelaLogin();
+        tl.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BotãoRegistrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoRegistrarClienteActionPerformed
+        // TODO add your handling code here:
+        CadastraCliente cadastrar = new CadastraCliente();
+        cadastrar.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_BotãoRegistrarClienteActionPerformed
+
+    private void BotãoOrcamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoOrcamentoActionPerformed
+        // TODO add your handling code here:
+        Orcamento or = new Orcamento();
+        or.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_BotãoOrcamentoActionPerformed
 
     /**
      * @param args the command line arguments
