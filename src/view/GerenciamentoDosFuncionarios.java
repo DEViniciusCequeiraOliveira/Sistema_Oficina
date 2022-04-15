@@ -9,6 +9,7 @@ import dal.Conexao;
 import model.Funcionario;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -40,7 +41,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        btnCargo = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
@@ -54,7 +55,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         btnAdicionar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnApagarCampos = new javax.swing.JButton();
         btnGerente = new javax.swing.JRadioButton();
         btnMecanico = new javax.swing.JRadioButton();
         btnAtendente = new javax.swing.JRadioButton();
@@ -119,6 +120,11 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(51, 153, 0));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton4.setText("Editar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(51, 153, 0));
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -129,11 +135,16 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setBackground(new java.awt.Color(51, 153, 0));
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton6.setText("Limpar Campos");
+        btnApagarCampos.setBackground(new java.awt.Color(51, 153, 0));
+        btnApagarCampos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnApagarCampos.setText("Limpar Campos");
+        btnApagarCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarCamposActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(btnGerente);
+        btnCargo.add(btnGerente);
         btnGerente.setText("Gerente");
         btnGerente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,7 +152,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             }
         });
 
-        buttonGroup1.add(btnMecanico);
+        btnCargo.add(btnMecanico);
         btnMecanico.setText("Mecanico");
         btnMecanico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,7 +160,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             }
         });
 
-        buttonGroup1.add(btnAtendente);
+        btnCargo.add(btnAtendente);
         btnAtendente.setText("Atendente");
         btnAtendente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,7 +251,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton5)
                                 .addGap(33, 33, 33)
-                                .addComponent(jButton6))
+                                .addComponent(btnApagarCampos))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(189, 189, 189)
@@ -277,7 +288,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
                             .addComponent(btnAtendente))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
+                    .addComponent(btnApagarCampos)
                     .addComponent(jButton5)
                     .addComponent(jButton4)
                     .addComponent(btnAdicionar))
@@ -312,6 +323,8 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         func.setNome(txtNome.getText());
         func.setCPF(txtCPF.getText());
         func.setSenha(txtSenha.getText());
+        func.setCargo(cargoAtual());
+
         cadastrarFuncionario(func.getNome(), func.getCPF(), func.getCargo(), func.getSenha());
         atualizarTabela();
     }//GEN-LAST:event_btnAdicionarActionPerformed
@@ -325,19 +338,57 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAtendenteActionPerformed
 
     private void tblFuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFuncMouseClicked
-
-        DefaultTableModel dtmTabela = (DefaultTableModel) tblFunc.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblFunc.getModel();
         int selectedRowIndex = tblFunc.getSelectedRow();
 
-        txtNome.setText(dtmTabela.getValueAt(selectedRowIndex, 1).toString());
-        txtCPF.setText(dtmTabela.getValueAt(selectedRowIndex, 2).toString());
-        //txt.setText(dtmTabela.getValueAt(selectedRowIndex, 3).toString());
-        txtSenha.setText(dtmTabela.getValueAt(selectedRowIndex, 4).toString());
+        txtNome.setText(model.getValueAt(selectedRowIndex, 1).toString());
+        txtCPF.setText(model.getValueAt(selectedRowIndex, 2).toString());
+        txtSenha.setText(model.getValueAt(selectedRowIndex, 4).toString());
+        String cargo = model.getValueAt(selectedRowIndex, 3).toString();
+        switch (cargo) {
+            case "Atendente" -> {
+                btnAtendente.setSelected(true);
+            }
+            case "Mecanico" -> {
+                btnMecanico.setSelected(true);
+            }
+            case "Gerente" -> {
+                btnGerente.setSelected(true);
+            }
+        }
     }//GEN-LAST:event_tblFuncMouseClicked
 
     private void tblFuncAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblFuncAncestorAdded
         atualizarTabela();
     }//GEN-LAST:event_tblFuncAncestorAdded
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            DefaultTableModel model = (DefaultTableModel) tblFunc.getModel();
+            int selectedRowIndex = tblFunc.getSelectedRow();
+
+            String sql = " UPDATE tbl_funcionario SET Nome = ?, CPF = ?, Cargo = ?, Senha = ? WHERE Id_Funcionario = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, txtNome.getText());
+            pstm.setString(2, txtCPF.getText());
+            pstm.setString(3, cargoAtual());
+            pstm.setString(4, txtSenha.getText());
+            pstm.setString(5, model.getValueAt(selectedRowIndex, 0).toString());
+            JOptionPane.showMessageDialog(null, "Atualizado");
+
+            pstm.execute();
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }        // TODO add your handling code her
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnApagarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarCamposActionPerformed
+        txtNome.setText("");
+        txtCPF.setText("");
+        txtSenha.setText("");
+        btnCargo.clearSelection();
+    }//GEN-LAST:event_btnApagarCamposActionPerformed
 
     public void cadastrarFuncionario(String nome, String cpf, String cargo, String senha) {
         String sql = "insert into tbl_funcionario (Nome, CPF, Cargo, Senha) values (?,?,?,?)";
@@ -356,51 +407,30 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro na view : " + erro);
         }
     }
-    /*
+
+    public String cargoAtual() {
+        if (btnAtendente.isSelected()) {
+            return "Atendente";
+        } else if (btnGerente.isSelected()) {
+            return "Gerente";
+        } else if (btnMecanico.isSelected()) {
+            return "Mecanico";
+        } else {
+            return "";
+        }
+    }
+
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) tblFunc.getModel();
-        String sql = "select * from tbl_funcionario";
+        ArrayList<Funcionario> lista = new ArrayList();
         model.getDataVector().removeAllElements();
         try {
-            pstm = conn.prepareStatement(sql);
-            rs = pstm.executeQuery();
-            lista.clear();
-            while (rs.next()) {
-            //Funcionario funcio = new Funcionario();
-                func.setId(rs.getInt("Id_Funcionario"));
-                func.setNome(rs.getString("Nomes"));
-                func.setCPF(rs.getString("CPF"));
-                func.setCargo(rs.getString("Cargo"));
-                func.setSenha(rs.getString("Senha"));
 
-                for (var s : lista) {
-                    System.out.println(s.getId() + s.getNome() + s.getCPF() + s.getCargo() + s.getSenha());
-                }
-                
-                lista.add(func);
-
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-        for (Funcionario f : lista) {
-            Object[] dados = {f.getId(), f.getNome(), f.getCPF(), f.getCargo(), f.getSenha()};
-            model.addRow(dados);
-        }
-    } */
-    
-    public void atualizarTabela() {
-        DefaultTableModel dtmTabela = (DefaultTableModel) tblFunc.getModel();
-        ArrayList<Funcionario> lista = new ArrayList();
-        dtmTabela.getDataVector().removeAllElements();
-        try {
-        
-            
             String sql = "select * from tbl_funcionario";
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
             lista.clear();
-            while(rs.next()){
+            while (rs.next()) {
                 Funcionario funcionario = new Funcionario();
                 funcionario.setId(rs.getInt("Id_Funcionario"));
                 funcionario.setNome(rs.getString("Nome"));
@@ -411,13 +441,14 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
-        } 
-     
-        for(Funcionario f:lista){
-        Object[] dados = {f.getId(),f.getNome(),f.getCPF(),f.getCargo(),f.getSenha()};
-        dtmTabela.addRow(dados);
+        }
+
+        for (Funcionario f : lista) {
+            Object[] dados = {f.getId(), f.getNome(), f.getCPF(), f.getCargo(), f.getSenha()};
+            model.addRow(dados);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -456,14 +487,14 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnApagarCampos;
     private javax.swing.JRadioButton btnAtendente;
+    private javax.swing.ButtonGroup btnCargo;
     private javax.swing.JRadioButton btnGerente;
     private javax.swing.JRadioButton btnMecanico;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -478,4 +509,8 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
     private javax.swing.JTextField txtNome;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
+
+    private void btnAtendente(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
