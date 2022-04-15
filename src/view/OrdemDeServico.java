@@ -28,8 +28,6 @@ public class OrdemDeServico extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton3 = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -38,6 +36,8 @@ public class OrdemDeServico extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ver Ordem de Serviços");
+        setResizable(false);
 
         jButton3.setBackground(new java.awt.Color(51, 255, 51));
         jButton3.setText("Voltar");
@@ -47,28 +47,14 @@ public class OrdemDeServico extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setBackground(new java.awt.Color(51, 255, 0));
-        jToggleButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jToggleButton1.setText("-");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
-        jToggleButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jToggleButton2.setText("X");
-
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 204, 0));
         jLabel1.setText("Ordem De Serviços");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/calcular 128px.png"))); // NOI18N
 
         jButton1.setBackground(new java.awt.Color(51, 153, 0));
         jButton1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 255, 0));
-        jButton1.setText("Delete");
+        jButton1.setText("Deletar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -76,7 +62,6 @@ public class OrdemDeServico extends javax.swing.JFrame {
         });
 
         jButton2.setBackground(new java.awt.Color(51, 153, 0));
-        jButton2.setForeground(new java.awt.Color(51, 255, 0));
         jButton2.setText("Ver Prontas");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,12 +70,10 @@ public class OrdemDeServico extends javax.swing.JFrame {
         });
 
         jButton4.setBackground(new java.awt.Color(51, 153, 0));
-        jButton4.setForeground(new java.awt.Color(51, 255, 0));
         jButton4.setText("Concluir");
 
         jButton5.setBackground(new java.awt.Color(51, 153, 0));
         jButton5.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(51, 255, 0));
         jButton5.setText("Ver Ativas");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -99,11 +82,7 @@ public class OrdemDeServico extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton2)
-                .addGap(3, 3, 3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -124,11 +103,8 @@ public class OrdemDeServico extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addComponent(jButton3)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel1)
                 .addGap(29, 29, 29)
                 .addComponent(jLabel2)
@@ -140,19 +116,16 @@ public class OrdemDeServico extends javax.swing.JFrame {
                 .addComponent(jButton4)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 2, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -205,7 +178,5 @@ public class OrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 }

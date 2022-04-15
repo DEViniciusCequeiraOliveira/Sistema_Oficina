@@ -27,8 +27,6 @@ public class Orcamento extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -38,18 +36,8 @@ public class Orcamento extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jToggleButton1.setBackground(new java.awt.Color(51, 255, 0));
-        jToggleButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jToggleButton1.setText("-");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
-        jToggleButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jToggleButton2.setText("X");
+        setTitle("Ver Orçamentos");
+        setResizable(false);
 
         jButton1.setBackground(new java.awt.Color(51, 255, 51));
         jButton1.setText("Voltar");
@@ -61,18 +49,14 @@ public class Orcamento extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(51, 153, 0));
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 204, 0));
         jLabel1.setText("Orçamentos");
 
         jButton2.setBackground(new java.awt.Color(0, 153, 51));
-        jButton2.setForeground(new java.awt.Color(0, 204, 0));
-        jButton2.setText("Deleta Ordem");
+        jButton2.setText("Deletar Ordem");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/X 18px.png"))); // NOI18N
-        jLabel3.setText("X");
 
         jButton3.setBackground(new java.awt.Color(0, 153, 51));
-        jButton3.setForeground(new java.awt.Color(0, 204, 0));
         jButton3.setText("Gera Ordem de Serviço");
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/calcular 128px.png"))); // NOI18N
@@ -83,61 +67,52 @@ public class Orcamento extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton2))
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 135, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(165, 165, 165)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(183, 183, 183)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel5)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(110, 110, 110)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(204, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(193, 193, 193))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(177, 177, 177))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(167, 167, 167))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(54, 54, 54)
+                .addGap(51, 51, 51)
                 .addComponent(jLabel4)
-                .addGap(68, 68, 68)
+                .addGap(71, 71, 71)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
                     .addComponent(jLabel3))
-                .addGap(111, 111, 111))
+                .addGap(93, 93, 93))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -186,7 +161,5 @@ public class Orcamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 }

@@ -51,7 +51,6 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtCPF = new javax.swing.JTextField();
         btnAdicionar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -62,6 +61,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblFunc = new javax.swing.JTable();
         txtSenha = new javax.swing.JPasswordField();
+        txtCPF = new javax.swing.JFormattedTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,6 +77,8 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerenciar Funcionários");
+        setResizable(false);
 
         jButton3.setBackground(new java.awt.Color(51, 255, 51));
         jButton3.setText("Voltar");
@@ -87,11 +89,9 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 204, 0));
-        jLabel1.setText("Nome funcionario :");
+        jLabel1.setText("Nome:");
 
         jLabel2.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 204, 0));
         jLabel2.setText("Sistema de Gerençiamento De funcionarios");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/funcionarios 128px.png"))); // NOI18N
@@ -99,26 +99,16 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         txtNome.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 204, 0));
         jLabel4.setText("Senha :");
 
         jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 204, 0));
         jLabel5.setText("Cargo:");
 
         jLabel6.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 204, 0));
         jLabel6.setText("CPF :");
-
-        txtCPF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCPFActionPerformed(evt);
-            }
-        });
 
         btnAdicionar.setBackground(new java.awt.Color(51, 153, 0));
         btnAdicionar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnAdicionar.setForeground(new java.awt.Color(51, 255, 0));
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,12 +118,10 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
 
         jButton4.setBackground(new java.awt.Color(51, 153, 0));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(51, 255, 0));
         jButton4.setText("Editar");
 
         jButton5.setBackground(new java.awt.Color(51, 153, 0));
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(51, 255, 0));
         jButton5.setText("Deletar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +131,6 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
 
         jButton6.setBackground(new java.awt.Color(51, 153, 0));
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(51, 255, 0));
         jButton6.setText("Limpar Campos");
 
         buttonGroup1.add(btnGerente);
@@ -193,7 +180,6 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(tblFunc);
-        tblFunc.getAccessibleContext().setAccessibleParent(jScrollPane1);
 
         txtSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,70 +187,73 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             }
         });
 
+        try {
+            txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                                         .addComponent(txtNome))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtCPF))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtSenha)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnGerente)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnMecanico)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnAtendente)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAdicionar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton6)
-                        .addGap(23, 23, 23)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(22, 22, 22))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAdicionar)
+                                .addGap(39, 39, 39)
+                                .addComponent(jButton4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton5)
+                                .addGap(33, 33, 33)
+                                .addComponent(jButton6))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(189, 189, 189)
+                        .addComponent(jLabel2)))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton3)
-                .addGap(20, 20, 20)
+                .addGap(14, 14, 14)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
@@ -274,7 +263,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
                             .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                             .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -292,12 +281,13 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
                     .addComponent(jButton5)
                     .addComponent(jButton4)
                     .addComponent(btnAdicionar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -309,10 +299,6 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void txtCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCPFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCPFActionPerformed
 
     private void btnGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenteActionPerformed
         func.setCargo("Gerente");
@@ -428,7 +414,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         } 
      
         for(Funcionario f:lista){
-        Object[] dados = {f.getId(),f.getNome(),f.getCargo(),f.getSenha(),f.getCPF()};
+        Object[] dados = {f.getId(),f.getNome(),f.getCPF(),f.getCargo(),f.getSenha()};
         dtmTabela.addRow(dados);
         }
     }
@@ -488,7 +474,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable tblFunc;
-    private javax.swing.JTextField txtCPF;
+    private javax.swing.JFormattedTextField txtCPF;
     private javax.swing.JTextField txtNome;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables

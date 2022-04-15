@@ -32,28 +32,24 @@ public class VerOrdemDeServico extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 204, 0));
         jLabel1.setText("Visualiza Ordem De Serviço");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/mecanico (2) 128PX.png"))); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(51, 153, 0));
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 255, 0));
         jButton1.setText("Concluidas");
 
-        jButton2.setBackground(new java.awt.Color(51, 153, 0));
+        jButton2.setBackground(new java.awt.Color(204, 204, 204));
         jButton2.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(51, 255, 0));
         jButton2.setText("Ativas");
 
-        jButton3.setBackground(new java.awt.Color(51, 255, 51));
+        jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setText("Voltar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,29 +57,13 @@ public class VerOrdemDeServico extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setBackground(new java.awt.Color(51, 255, 0));
-        jToggleButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jToggleButton1.setText("-");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
-        jToggleButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jToggleButton2.setText("X");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton2)
-                .addGap(4, 4, 4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -97,37 +77,30 @@ public class VerOrdemDeServico extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(138, 138, 138)
                         .addComponent(jLabel2)))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(139, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton3)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                .addComponent(jButton3)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(56, 56, 56)
                 .addComponent(jButton1)
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,7 +143,5 @@ public class VerOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 }

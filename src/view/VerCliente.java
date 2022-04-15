@@ -28,14 +28,16 @@ public class VerCliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         BotaodeletaCliente = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Visualizar Clientes");
+        setResizable(false);
 
-        jButton1.setBackground(new java.awt.Color(51, 255, 51));
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setText("Voltar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -43,27 +45,24 @@ public class VerCliente extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setBackground(new java.awt.Color(51, 255, 0));
-        jToggleButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jToggleButton1.setText("-");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
-        jToggleButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jToggleButton2.setText("X");
-
         jLabel1.setBackground(new java.awt.Color(51, 153, 0));
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 204, 0));
         jLabel1.setText("Ver Clientes");
 
-        BotaodeletaCliente.setBackground(new java.awt.Color(51, 153, 0));
+        BotaodeletaCliente.setBackground(new java.awt.Color(204, 204, 204));
         BotaodeletaCliente.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        BotaodeletaCliente.setForeground(new java.awt.Color(51, 255, 0));
-        BotaodeletaCliente.setText("Deleta");
+        BotaodeletaCliente.setText("Deletar");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nome", "Telefone", "CPF", "E-Mail", "Endereço", "Placa"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+        jTable1.getAccessibleContext().setAccessibleName("Tabela Clientes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,44 +70,39 @@ public class VerCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton2))
-            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 116, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(BotaodeletaCliente)))
-                .addContainerGap(174, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(BotaodeletaCliente))
+                        .addGap(290, 290, 290))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66)
+                .addComponent(jButton1)
+                .addGap(9, 9, 9)
                 .addComponent(jLabel1)
-                .addGap(83, 83, 83)
+                .addGap(69, 69, 69)
                 .addComponent(BotaodeletaCliente)
-                .addGap(0, 250, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 117, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,7 +143,7 @@ public class VerCliente extends javax.swing.JFrame {
     private javax.swing.JButton BotaodeletaCliente;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

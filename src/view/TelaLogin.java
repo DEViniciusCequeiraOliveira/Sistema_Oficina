@@ -54,6 +54,8 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login ");
+        setResizable(false);
 
         BotaoEntrar.setBackground(new java.awt.Color(139, 0, 139));
         BotaoEntrar.setForeground(new java.awt.Color(50, 205, 50));
@@ -189,6 +191,7 @@ public class TelaLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void TXTLoginCampoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTLoginCampoSenhaActionPerformed
@@ -217,7 +220,7 @@ public class TelaLogin extends javax.swing.JFrame {
                         conn.close();
                     }
                     case "Atendente" -> {
-                        TelaAtendente aten = new TelaAtendente();
+                        TelaRecepcionista aten = new TelaRecepcionista();
                         aten.setVisible(true);
                         dispose();
                         conn.close();
