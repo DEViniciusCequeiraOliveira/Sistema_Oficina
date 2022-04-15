@@ -5,11 +5,24 @@
  */
 package view;
 
+import dal.Conexao;
+import model.Funcionario;
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author janae
  */
 public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
+
+    Funcionario func = new Funcionario();
+
+    Connection conn = new Conexao().connect();
+    PreparedStatement pstm;
+    ResultSet rs;
 
     /**
      * Creates new form GerenciamentoDosFuncioanrios
@@ -31,26 +44,24 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        txtCPF = new javax.swing.JTextField();
+        btnAdicionar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        btnGerente = new javax.swing.JRadioButton();
+        btnMecanico = new javax.swing.JRadioButton();
+        btnAtendente = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblFunc = new javax.swing.JTable();
+        txtSenha = new javax.swing.JPasswordField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -75,18 +86,6 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setBackground(new java.awt.Color(51, 255, 0));
-        jToggleButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jToggleButton1.setText("-");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
-        jToggleButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jToggleButton2.setText("X");
-
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 204, 0));
         jLabel1.setText("Nome funcionario :");
@@ -97,13 +96,11 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/funcionarios 128px.png"))); // NOI18N
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtNome.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 204, 0));
         jLabel4.setText("Senha :");
-
-        jTextField2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 204, 0));
@@ -113,16 +110,21 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 204, 0));
         jLabel6.setText("CPF :");
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtCPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtCPFActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(51, 153, 0));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(51, 255, 0));
-        jButton2.setText("Adicionar");
+        btnAdicionar.setBackground(new java.awt.Color(51, 153, 0));
+        btnAdicionar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnAdicionar.setForeground(new java.awt.Color(51, 255, 0));
+        btnAdicionar.setText("Adicionar");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(51, 153, 0));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -144,32 +146,60 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         jButton6.setForeground(new java.awt.Color(51, 255, 0));
         jButton6.setText("Limpar Campos");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Gerente");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(btnGerente);
+        btnGerente.setText("Gerente");
+        btnGerente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                btnGerenteActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Mecanico");
+        buttonGroup1.add(btnMecanico);
+        btnMecanico.setText("Mecanico");
+        btnMecanico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMecanicoActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("Atendente");
+        buttonGroup1.add(btnAtendente);
+        btnAtendente.setText("Atendente");
+        btnAtendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtendenteActionPerformed(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblFunc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nome", "CPF", "Cargo", "Senha"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        tblFunc.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tblFuncAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        tblFunc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblFuncMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblFunc);
+        tblFunc.getAccessibleContext().setAccessibleParent(jScrollPane1);
+
+        txtSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSenhaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -186,36 +216,35 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField2))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField4))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField1)))
+                                        .addComponent(txtNome))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCPF))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtSenha)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButton1)
+                                .addComponent(btnGerente)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2)
+                                .addComponent(btnMecanico)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton3)
+                                .addComponent(btnAtendente)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jToggleButton1))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(btnAdicionar)
                         .addGap(18, 18, 18)
                         .addComponent(jButton4)
                         .addGap(18, 18, 18)
@@ -223,8 +252,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButton6)
                         .addGap(23, 23, 23)))
-                .addGap(1, 1, 1)
-                .addComponent(jToggleButton2))
+                .addGap(22, 22, 22))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,11 +261,8 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                .addComponent(jButton3)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,27 +271,27 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
                         .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton3))))
+                            .addComponent(btnGerente)
+                            .addComponent(btnMecanico)
+                            .addComponent(btnAtendente))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
                     .addComponent(jButton5)
                     .addComponent(jButton4)
-                    .addComponent(jButton2))
+                    .addComponent(btnAdicionar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 6, Short.MAX_VALUE))
@@ -276,25 +301,137 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        TelaGerente telaGer = new TelaGerente();
+        telaGer.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCPFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtCPFActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void btnGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenteActionPerformed
+        func.setCargo("Gerente");
+    }//GEN-LAST:event_btnGerenteActionPerformed
+
+    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_txtSenhaActionPerformed
 
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        func.setNome(txtNome.getText());
+        func.setCPF(txtCPF.getText());
+        func.setSenha(txtSenha.getText());
+        cadastrarFuncionario(func.getNome(), func.getCPF(), func.getCargo(), func.getSenha());
+        atualizarTabela();
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMecanicoActionPerformed
+        func.setCargo("Mecanico");
+    }//GEN-LAST:event_btnMecanicoActionPerformed
+
+    private void btnAtendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtendenteActionPerformed
+        func.setCargo("Atendente");
+    }//GEN-LAST:event_btnAtendenteActionPerformed
+
+    private void tblFuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFuncMouseClicked
+
+        DefaultTableModel dtmTabela = (DefaultTableModel) tblFunc.getModel();
+        int selectedRowIndex = tblFunc.getSelectedRow();
+
+        txtNome.setText(dtmTabela.getValueAt(selectedRowIndex, 1).toString());
+        txtCPF.setText(dtmTabela.getValueAt(selectedRowIndex, 2).toString());
+        //txt.setText(dtmTabela.getValueAt(selectedRowIndex, 3).toString());
+        txtSenha.setText(dtmTabela.getValueAt(selectedRowIndex, 4).toString());
+    }//GEN-LAST:event_tblFuncMouseClicked
+
+    private void tblFuncAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblFuncAncestorAdded
+        atualizarTabela();
+    }//GEN-LAST:event_tblFuncAncestorAdded
+
+    public void cadastrarFuncionario(String nome, String cpf, String cargo, String senha) {
+        String sql = "insert into tbl_funcionario (Nome, CPF, Cargo, Senha) values (?,?,?,?)";
+
+        try {
+            pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, nome);
+            pstm.setString(2, cpf);
+            pstm.setString(3, cargo);
+            pstm.setString(4, senha);
+
+            pstm.execute();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro na view : " + erro);
+        }
+    }
+    /*
+    public void atualizarTabela() {
+        DefaultTableModel model = (DefaultTableModel) tblFunc.getModel();
+        String sql = "select * from tbl_funcionario";
+        model.getDataVector().removeAllElements();
+        try {
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            lista.clear();
+            while (rs.next()) {
+            //Funcionario funcio = new Funcionario();
+                func.setId(rs.getInt("Id_Funcionario"));
+                func.setNome(rs.getString("Nomes"));
+                func.setCPF(rs.getString("CPF"));
+                func.setCargo(rs.getString("Cargo"));
+                func.setSenha(rs.getString("Senha"));
+
+                for (var s : lista) {
+                    System.out.println(s.getId() + s.getNome() + s.getCPF() + s.getCargo() + s.getSenha());
+                }
+                
+                lista.add(func);
+
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        for (Funcionario f : lista) {
+            Object[] dados = {f.getId(), f.getNome(), f.getCPF(), f.getCargo(), f.getSenha()};
+            model.addRow(dados);
+        }
+    } */
+    
+    public void atualizarTabela() {
+        DefaultTableModel dtmTabela = (DefaultTableModel) tblFunc.getModel();
+        ArrayList<Funcionario> lista = new ArrayList();
+        dtmTabela.getDataVector().removeAllElements();
+        try {
+        
+            
+            String sql = "select * from tbl_funcionario";
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            lista.clear();
+            while(rs.next()){
+                Funcionario funcionario = new Funcionario();
+                funcionario.setId(rs.getInt("Id_Funcionario"));
+                funcionario.setNome(rs.getString("Nome"));
+                funcionario.setCargo(rs.getString("Cargo"));
+                funcionario.setSenha(rs.getString("Senha"));
+                funcionario.setCPF(rs.getString("CPF"));
+                lista.add(funcionario);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        } 
+     
+        for(Funcionario f:lista){
+        Object[] dados = {f.getId(),f.getNome(),f.getCargo(),f.getSenha(),f.getCPF()};
+        dtmTabela.addRow(dados);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -332,8 +469,11 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdicionar;
+    private javax.swing.JRadioButton btnAtendente;
+    private javax.swing.JRadioButton btnGerente;
+    private javax.swing.JRadioButton btnMecanico;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -344,17 +484,12 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JTable tblFunc;
+    private javax.swing.JTextField txtCPF;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }

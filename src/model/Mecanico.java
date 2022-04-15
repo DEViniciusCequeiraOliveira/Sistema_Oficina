@@ -11,9 +11,8 @@ package model;
  * @author ALUNO
  */
 public class Mecanico extends Funcionario {
-    
     /*public Mecanico(String senha) {
         super(senha);
     }*/
-    
+
 }

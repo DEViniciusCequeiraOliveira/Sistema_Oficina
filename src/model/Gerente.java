@@ -13,9 +13,9 @@ package model;
  * @author ALUNO
  */
 public class Gerente extends Funcionario {
-    
     /*public Gerente(String senha) {
         super(senha);
     }*/
-    
+
+
 }

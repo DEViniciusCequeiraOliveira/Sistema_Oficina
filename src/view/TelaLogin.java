@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  *
@@ -26,6 +25,9 @@ public class TelaLogin extends javax.swing.JFrame {
     public TelaLogin() {
         initComponents();
     }
+    ResultSet rs;
+    PreparedStatement pstm;
+     Connection conn = new Conexao().connect();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,8 +52,6 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,18 +102,6 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(0, 204, 204));
         jLabel10.setText(" SENAi");
 
-        jToggleButton1.setBackground(new java.awt.Color(51, 255, 0));
-        jToggleButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jToggleButton1.setText("-");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
-        jToggleButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jToggleButton2.setText("X");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,11 +150,7 @@ public class TelaLogin extends javax.swing.JFrame {
                                 .addGap(38, 38, 38))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(BotaoEntrar)
-                                .addGap(46, 46, 46))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jToggleButton1)
-                                .addGap(1, 1, 1)
-                                .addComponent(jToggleButton2))))))
+                                .addGap(46, 46, 46))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,10 +169,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(214, 214, 214))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1)
-                    .addComponent(jToggleButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,10 +191,6 @@ public class TelaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
     private void TXTLoginCampoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTLoginCampoSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TXTLoginCampoSenhaActionPerformed
@@ -223,7 +200,7 @@ public class TelaLogin extends javax.swing.JFrame {
         func.setNome(TXTLoginUsuario.getText());
         func.setSenha(TXTLoginCampoSenha.getText());
         ResultSet rsUsuario = autenticacaoUsuario(func.getNome(), func.getSenha());
-        
+
         try {
             if (rsUsuario.next()) {
                 switch (rsUsuario.getString(4)) {
@@ -231,16 +208,19 @@ public class TelaLogin extends javax.swing.JFrame {
                         TelaGerente gen = new TelaGerente();
                         gen.setVisible(true);
                         dispose();
+                        conn.close();
                     }
                     case "Mecanico" -> {
                         TelaMecanico mec = new TelaMecanico();
                         mec.setVisible(true);
                         dispose();
+                        conn.close();
                     }
                     case "Atendente" -> {
                         TelaAtendente aten = new TelaAtendente();
                         aten.setVisible(true);
                         dispose();
+                        conn.close();
                     }
                 }
             } else {
@@ -251,22 +231,22 @@ public class TelaLogin extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_BotaoEntrarActionPerformed
-    
+
     public ResultSet autenticacaoUsuario(String nome, String senha) {
-        Connection conn = new Conexao().connect();
+       
         try {
             String sql = "select * from tbl_funcionario where Nome = ? and Senha = ?";
-            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm = conn.prepareStatement(sql);
             pstm.setString(1, nome);
             pstm.setString(2, senha);
-            
-            ResultSet rs = pstm.executeQuery();
-            return rs;
+
+            return pstm.executeQuery();
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, erro);
             return null;
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -317,7 +297,5 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 }

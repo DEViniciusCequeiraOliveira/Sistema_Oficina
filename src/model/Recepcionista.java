@@ -11,9 +11,8 @@ package model;
  * @author ALUNO
  */
 public class Recepcionista extends Funcionario {
-    
-    /*public Recepcionista(String senha) {
+     /*public Recepcionista(String senha) {
         super(senha);
     }*/
-    
+
 }
