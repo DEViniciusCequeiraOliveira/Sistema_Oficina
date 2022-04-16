@@ -5,11 +5,24 @@
  */
 package view;
 
+import dal.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author janae
  */
 public class VerOrdemDeServico extends javax.swing.JFrame {
+
+    Connection conn = new Conexao().connect();
+    PreparedStatement pstm;
+    ResultSet rs;
 
     /**
      * Creates new form VerOrdemDeServico
@@ -33,7 +46,7 @@ public class VerOrdemDeServico extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblVisualizarOrdemServi = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -46,10 +59,20 @@ public class VerOrdemDeServico extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jButton1.setText("Concluidas");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
         jButton2.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jButton2.setText("Ativas");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setText("Voltar");
@@ -59,7 +82,7 @@ public class VerOrdemDeServico extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblVisualizarOrdemServi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -67,7 +90,16 @@ public class VerOrdemDeServico extends javax.swing.JFrame {
                 "ID", "CPF do Cliente", "CPF do Mecancio", "Valor", "Serviço"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblVisualizarOrdemServi.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tblVisualizarOrdemServiAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tblVisualizarOrdemServi);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,6 +155,72 @@ public class VerOrdemDeServico extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void tblVisualizarOrdemServiAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblVisualizarOrdemServiAncestorAdded
+        atualizarTabela();
+    }//GEN-LAST:event_tblVisualizarOrdemServiAncestorAdded
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        atualizarTabela();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tblVisualizarOrdemServi.getModel();
+        ArrayList<model.Orcamento> lista = new ArrayList();
+        model.getDataVector().removeAllElements();
+        try {
+
+            String sql = "select * from tbl_orçamento where Pronto = 1 and OrdemServico = 1";
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            lista.clear();
+            while (rs.next()) {
+                model.Orcamento orca = new model.Orcamento();
+                orca.setId_orcamento(rs.getInt("Id_Orçamento"));
+                orca.setValor(rs.getString("Valor"));
+                orca.setCpfCliente(rs.getString("CPF_Cliente"));
+                orca.setCpfMecanico(rs.getString("CPF_Mecanico"));
+                orca.setServiços(rs.getString("Serviço"));
+                lista.add(orca);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+        for (model.Orcamento o : lista) {
+            Object[] dados = {o.getId_orcamento(), o.getValor(), o.getCpfCliente(), o.getCpfMecanico(), o.getServiços()};
+            model.addRow(dados);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void atualizarTabela() {
+        DefaultTableModel model = (DefaultTableModel) tblVisualizarOrdemServi.getModel();
+        ArrayList<model.Orcamento> lista = new ArrayList();
+        model.getDataVector().removeAllElements();
+        try {
+
+            String sql = "select * from tbl_orçamento where OrdemServico = 1 and Pronto = 0";
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            lista.clear();
+            while (rs.next()) {
+                model.Orcamento orca = new model.Orcamento();
+                orca.setId_orcamento(rs.getInt("Id_Orçamento"));
+                orca.setValor(rs.getString("Valor"));
+                orca.setCpfCliente(rs.getString("CPF_Cliente"));
+                orca.setCpfMecanico(rs.getString("CPF_Mecanico"));
+                orca.setServiços(rs.getString("Serviço"));
+                lista.add(orca);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+        for (model.Orcamento o : lista) {
+            Object[] dados = {o.getId_orcamento(), o.getValor(), o.getCpfCliente(), o.getCpfMecanico(), o.getServiços()};
+            model.addRow(dados);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -165,6 +263,6 @@ public class VerOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblVisualizarOrdemServi;
     // End of variables declaration//GEN-END:variables
 }

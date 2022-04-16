@@ -64,6 +64,11 @@ public class TelaMecanico extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
         jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton2.setText("Ordem De Serviço");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/servico 16px.png"))); // NOI18N
 
@@ -112,8 +117,6 @@ public class TelaMecanico extends javax.swing.JFrame {
                 .addGap(0, 56, Short.MAX_VALUE))
         );
 
-        jButton1.getAccessibleContext().setAccessibleName("Sair");
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -131,6 +134,12 @@ public class TelaMecanico extends javax.swing.JFrame {
         co.setVisible(true);
         dispose();
     }//GEN-LAST:event_OrcamentoMecanicoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        VerOrdemDeServico verOrdServ = new VerOrdemDeServico();
+        verOrdServ.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
