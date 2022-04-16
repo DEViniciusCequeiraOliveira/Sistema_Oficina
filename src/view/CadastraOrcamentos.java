@@ -5,11 +5,26 @@
  */
 package view;
 
+import dal.Conexao;
+import model.Orcamento;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author janae
  */
 public class CadastraOrcamentos extends javax.swing.JFrame {
+
+    Orcamento orc = new Orcamento();
+    Connection conn = new Conexao().connect();
+    PreparedStatement pstm;
+    ResultSet rs;
 
     /**
      * Creates new form CadastraOrcamento
@@ -34,14 +49,16 @@ public class CadastraOrcamentos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtValor = new javax.swing.JTextField();
+        txtServico = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        btnEditar = new javax.swing.JButton();
+        btnApagarCampos = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        txtCPFClient = new javax.swing.JFormattedTextField();
+        txtCPFMec = new javax.swing.JFormattedTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCadastraOrc = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastrar Orçamentos");
@@ -72,120 +89,172 @@ public class CadastraOrcamentos extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setText("Serviços :");
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtServicoActionPerformed(evt);
             }
         });
 
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton2.setText("Adicionar");
-
-        jButton4.setBackground(new java.awt.Color(204, 204, 204));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton4.setText("Editar");
-
-        jButton6.setBackground(new java.awt.Color(204, 204, 204));
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton6.setText("Limpar Campos");
-
-        jButton5.setBackground(new java.awt.Color(204, 204, 204));
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton5.setText("Deletar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setBackground(new java.awt.Color(204, 204, 204));
+        btnEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnApagarCampos.setBackground(new java.awt.Color(204, 204, 204));
+        btnApagarCampos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnApagarCampos.setText("Limpar Campos");
+        btnApagarCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarCamposActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setBackground(new java.awt.Color(204, 204, 204));
+        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnDelete.setText("Deletar");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
             }
         });
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            txtCPFClient.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
         try {
-            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            txtCPFMec.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtCPFMec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCPFMecActionPerformed(evt);
+            }
+        });
+
+        tblCadastraOrc.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "CPF do Cliente", "CPF do Mecanico", "Valor R$", "Serviços"
+            }
+        ));
+        tblCadastraOrc.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tblCadastraOrcAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        tblCadastraOrc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCadastraOrcMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblCadastraOrc);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4)
-                            .addComponent(jFormattedTextField1)
-                            .addComponent(jFormattedTextField2))
-                        .addGap(73, 73, 73))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jButton2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(84, 192, Short.MAX_VALUE)
+                .addGap(0, 19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton5)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton6)
-                        .addGap(84, 84, 84))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(221, 221, 221))
+                        .addGap(206, 206, 206))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(196, 196, 196))))
+                        .addGap(181, 181, 181))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtCPFClient))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtCPFMec))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtValor))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtServico, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(115, 115, 115)
+                                .addComponent(btnEditar)
+                                .addGap(29, 29, 29)
+                                .addComponent(btnDelete)
+                                .addGap(29, 29, 29)
+                                .addComponent(btnApagarCampos))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(78, 78, 78)))
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton3)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtCPFClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtCPFMec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                    .addComponent(txtServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton4)
-                    .addComponent(jButton6)
-                    .addComponent(jButton5))
-                .addGap(51, 51, 51))
+                    .addComponent(btnEditar)
+                    .addComponent(btnApagarCampos)
+                    .addComponent(btnDelete))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -199,13 +268,128 @@ public class CadastraOrcamentos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServicoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtServicoActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        DefaultTableModel dtmTabela = (DefaultTableModel) tblCadastraOrc.getModel();
+        Object id = dtmTabela.getValueAt(tblCadastraOrc.getSelectedRow(), 0);
+        try {
+            String sql = "delete from tbl_orçamento where Id_Orçamento = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setObject(1, id);
+            pstm.execute();
+            pstm.close();
+            JOptionPane.showMessageDialog(null, "Deletado");
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void txtCPFMecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCPFMecActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_txtCPFMecActionPerformed
+
+    private void tblCadastraOrcAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblCadastraOrcAncestorAdded
+        atualizarTabela();
+    }//GEN-LAST:event_tblCadastraOrcAncestorAdded
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        try {
+            DefaultTableModel model = (DefaultTableModel) tblCadastraOrc.getModel();
+            int selectedRowIndex = tblCadastraOrc.getSelectedRow();
+
+            String sql = " UPDATE tbl_orçamento SET Valor = ?, CPF_Cliente = ?, CPF_Mecanico = ?, Serviço = ? WHERE Id_Orçamento = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, txtValor.getText());
+            pstm.setString(2, txtCPFClient.getText());
+            pstm.setString(3, txtCPFMec.getText());
+            pstm.setString(4, txtServico.getText());
+            pstm.setString(5, model.getValueAt(selectedRowIndex, 0).toString());
+            JOptionPane.showMessageDialog(null, "Atualizado");
+
+            pstm.execute();
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnApagarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarCamposActionPerformed
+        txtCPFClient.setText("");
+        txtCPFMec.setText("");
+        txtServico.setText("");
+        txtValor.setText("");
+    }//GEN-LAST:event_btnApagarCamposActionPerformed
+
+    private void tblCadastraOrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCadastraOrcMouseClicked
+        DefaultTableModel model = (DefaultTableModel) tblCadastraOrc.getModel();
+        int selectedRowIndex = tblCadastraOrc.getSelectedRow();
+
+        txtCPFClient.setText(model.getValueAt(selectedRowIndex, 1).toString());
+        txtCPFMec.setText(model.getValueAt(selectedRowIndex, 2).toString());
+        txtValor.setText(model.getValueAt(selectedRowIndex, 3).toString());
+        txtServico.setText(model.getValueAt(selectedRowIndex, 4).toString());
+    }//GEN-LAST:event_tblCadastraOrcMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        orc.setCpfCliente(txtCPFClient.getText());
+        orc.setCpfMecanico(txtCPFMec.getText());
+        orc.setValor(txtValor.getText());
+        orc.setServiços(txtServico.getText());
+
+        cadastrarOrcamento(orc.getValor(), orc.getCpfCliente(), orc.getCpfMecanico(), orc.getServiços());
+        atualizarTabela();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void atualizarTabela() {
+        DefaultTableModel model = (DefaultTableModel) tblCadastraOrc.getModel();
+        ArrayList<model.Orcamento> lista = new ArrayList();
+        model.getDataVector().removeAllElements();
+        try {
+
+            String sql = "select * from tbl_orçamento where OrdemServico = 0";
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            lista.clear();
+            while (rs.next()) {
+                model.Orcamento orca = new model.Orcamento();
+                orca.setId_orcamento(rs.getInt("Id_Orçamento"));
+                orca.setValor(rs.getString("Valor"));
+                orca.setCpfCliente(rs.getString("CPF_Cliente"));
+                orca.setCpfMecanico(rs.getString("CPF_Mecanico"));
+                orca.setServiços(rs.getString("Serviço"));
+                lista.add(orca);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Atualizar tabela" + e);
+        }
+
+        for (model.Orcamento o : lista) {
+            Object[] dados = {o.getId_orcamento(), o.getCpfCliente(), o.getCpfMecanico(), o.getValor(), o.getServiços()};
+            model.addRow(dados);
+        }
+    }
+
+    public void cadastrarOrcamento(String valor, String cpf_cliente, String cpf_mecanico, String servico) {
+        String sql = "insert into tbl_orçamento (Valor, CPF_Cliente, CPF_Mecanico, Serviço) values (?,?,?,?)";
+
+        try {
+            pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, valor);
+            pstm.setString(2, cpf_cliente);
+            pstm.setString(3, cpf_mecanico);
+            pstm.setString(4, servico);
+
+            pstm.execute();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro na view : " + erro);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -246,20 +430,22 @@ public class CadastraOrcamentos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnApagarCampos;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblCadastraOrc;
+    private javax.swing.JFormattedTextField txtCPFClient;
+    private javax.swing.JFormattedTextField txtCPFMec;
+    private javax.swing.JTextField txtServico;
+    private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

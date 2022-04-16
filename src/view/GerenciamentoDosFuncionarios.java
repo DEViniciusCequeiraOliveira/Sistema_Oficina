@@ -9,7 +9,6 @@ import dal.Conexao;
 import model.Funcionario;
 import java.sql.*;
 import java.util.ArrayList;
-import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

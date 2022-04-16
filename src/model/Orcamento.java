@@ -14,7 +14,7 @@ public class Orcamento {
     private int id_orcamento;
     private String CpfCliente;
     private String CpfMecanico;
-    private Double valor;
+    private String valor;
     private String serviços;
 
     /*public Orçamento(String CpfCliente, String CpfMecanico, Double valor, String serviços) {
@@ -40,11 +40,11 @@ public class Orcamento {
         this.CpfMecanico = CpfMecanico;
     }
 
-    public Double getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 

@@ -200,14 +200,14 @@ public class OrdemDeServico extends javax.swing.JFrame {
         model.getDataVector().removeAllElements();
         try {
 
-            String sql = "select * from tbl_orçamento where Pronto = 1";
+            String sql = "select * from tbl_orçamento where Pronto = 1 and OrdemServico = 1";
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
             lista.clear();
             while (rs.next()) {
                 Orcamento orca = new Orcamento();
                 orca.setId_orcamento(rs.getInt("Id_Orçamento"));
-                orca.setValor(rs.getDouble("Valor"));
+                orca.setValor(rs.getString("Valor"));
                 orca.setCpfCliente(rs.getString("CPF_Cliente"));
                 orca.setCpfMecanico(rs.getString("CPF_Mecanico"));
                 orca.setServiços(rs.getString("Serviço"));
@@ -231,7 +231,7 @@ public class OrdemDeServico extends javax.swing.JFrame {
         DefaultTableModel dtmTabela = (DefaultTableModel) tblOrdemServ.getModel();
         Object id = dtmTabela.getValueAt(tblOrdemServ.getSelectedRow(), 0);
         try {
-            String sql = "update tbl_orçamento set Pronto = true  where Id_Orçamento = ?";
+            String sql = "update tbl_orçamento set Pronto = 1 where Id_Orçamento = ?";
             pstm = conn.prepareStatement(sql);
             pstm.setObject(1, id);
             pstm.execute();
@@ -253,14 +253,14 @@ public class OrdemDeServico extends javax.swing.JFrame {
         model.getDataVector().removeAllElements();
         try {
 
-            String sql = "select * from tbl_orçamento where Pronto = 0";
+            String sql = "select * from tbl_orçamento where OrdemServico = 1 and Pronto = 0";
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
             lista.clear();
             while (rs.next()) {
                 Orcamento orca = new Orcamento();
                 orca.setId_orcamento(rs.getInt("Id_Orçamento"));
-                orca.setValor(rs.getDouble("Valor"));
+                orca.setValor(rs.getString("Valor"));
                 orca.setCpfCliente(rs.getString("CPF_Cliente"));
                 orca.setCpfMecanico(rs.getString("CPF_Mecanico"));
                 orca.setServiços(rs.getString("Serviço"));
