@@ -54,7 +54,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         btnAdicionar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         btnApagarCampos = new javax.swing.JButton();
         btnGerente = new javax.swing.JRadioButton();
         btnMecanico = new javax.swing.JRadioButton();
@@ -126,17 +126,16 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(204, 204, 204));
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton5.setText("Deletar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setBackground(new java.awt.Color(204, 204, 204));
+        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnDelete.setText("Deletar");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
 
-
-        btnApagarCampos.setBackground(new java.awt.Color(51, 153, 0));
+        btnApagarCampos.setBackground(new java.awt.Color(204, 204, 204));
         btnApagarCampos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnApagarCampos.setText("Limpar Campos");
         btnApagarCampos.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +143,6 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
                 btnApagarCamposActionPerformed(evt);
             }
         });
-
 
         btnCargo.add(btnGerente);
         btnGerente.setText("Gerente");
@@ -251,7 +249,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
                                 .addGap(39, 39, 39)
                                 .addComponent(jButton4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton5)
+                                .addComponent(btnDelete)
                                 .addGap(33, 33, 33)
                                 .addComponent(btnApagarCampos))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -291,7 +289,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnApagarCampos)
-                    .addComponent(jButton5)
+                    .addComponent(btnDelete)
                     .addComponent(jButton4)
                     .addComponent(btnAdicionar))
                 .addGap(18, 18, 18)
@@ -309,9 +307,21 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        DefaultTableModel dtmTabela = (DefaultTableModel) tblFunc.getModel();
+        Object id = dtmTabela.getValueAt(tblFunc.getSelectedRow(), 0);
+        try {
+            String sql = "delete from tbl_funcionario where Id_Funcionario = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setObject(1, id);
+            pstm.execute();
+            pstm.close();
+            JOptionPane.showMessageDialog(null, "Deletado");
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }     
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenteActionPerformed
         func.setCargo("Gerente");
@@ -492,11 +502,11 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
     private javax.swing.JButton btnApagarCampos;
     private javax.swing.JRadioButton btnAtendente;
     private javax.swing.ButtonGroup btnCargo;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JRadioButton btnGerente;
     private javax.swing.JRadioButton btnMecanico;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

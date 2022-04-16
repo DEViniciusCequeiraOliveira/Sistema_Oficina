@@ -10,8 +10,8 @@ package model;
  *
  * @author ALUNO
  */
-public class Orçamento {
-    
+public class Orcamento {
+    private int id_orcamento;
     private String CpfCliente;
     private String CpfMecanico;
     private Double valor;
@@ -56,8 +56,11 @@ public class Orçamento {
         this.serviços = serviços;
     }
     
-    
-    
-    
-    
+    public int getId_orcamento() {
+        return id_orcamento;
+    }
+
+    public void setId_orcamento(int id_orcamento) {
+        this.id_orcamento = id_orcamento;
+      }
 }

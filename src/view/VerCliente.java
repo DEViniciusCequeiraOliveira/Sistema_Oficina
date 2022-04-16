@@ -5,11 +5,25 @@
  */
 package view;
 
+import dal.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Cliente;
+
 /**
  *
  * @author janae
  */
 public class VerCliente extends javax.swing.JFrame {
+
+    Connection conn = new Conexao().connect();
+    PreparedStatement pstm;
+    ResultSet rs;
 
     /**
      * Creates new form VerCliente
@@ -29,9 +43,9 @@ public class VerCliente extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        BotaodeletaCliente = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCliente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Visualizar Clientes");
@@ -49,11 +63,16 @@ public class VerCliente extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("Ver Clientes");
 
-        BotaodeletaCliente.setBackground(new java.awt.Color(204, 204, 204));
-        BotaodeletaCliente.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        BotaodeletaCliente.setText("Deletar");
+        btnDeletar.setBackground(new java.awt.Color(204, 204, 204));
+        btnDeletar.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -61,8 +80,17 @@ public class VerCliente extends javax.swing.JFrame {
                 "ID", "Nome", "Telefone", "CPF", "E-Mail", "Endereço", "Placa"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getAccessibleContext().setAccessibleName("Tabela Clientes");
+        tblCliente.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tblClienteAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tblCliente);
+        tblCliente.getAccessibleContext().setAccessibleName("Tabela Clientes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,16 +100,15 @@ public class VerCliente extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 116, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(BotaodeletaCliente))
-                        .addGap(290, 290, 290))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77))))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnDeletar))
+                .addGap(290, 290, 290))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,10 +117,10 @@ public class VerCliente extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addComponent(jLabel1)
                 .addGap(69, 69, 69)
-                .addComponent(BotaodeletaCliente)
-                .addGap(32, 32, 32)
+                .addComponent(btnDeletar)
+                .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 117, Short.MAX_VALUE))
+                .addGap(0, 118, Short.MAX_VALUE))
         );
 
         pack();
@@ -106,6 +133,66 @@ public class VerCliente extends javax.swing.JFrame {
         tg.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tblClienteAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblClienteAncestorAdded
+        atualizarTabela();
+    }//GEN-LAST:event_tblClienteAncestorAdded
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        DefaultTableModel dtmTabela = (DefaultTableModel) tblCliente.getModel();
+        Object id = dtmTabela.getValueAt(tblCliente.getSelectedRow(), 0);
+        try {
+            String sql = "delete from tbl_cliente where Id_Cliente = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setObject(1, id);
+            pstm.execute();
+            pstm.close();
+            rs.close();
+            JOptionPane.showMessageDialog(null, "Deletado");
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"erro: " + e);
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    public void atualizarTabela() {
+        DefaultTableModel model = (DefaultTableModel) tblCliente.getModel();
+        ArrayList<Cliente> lista = new ArrayList();
+        model.getDataVector().removeAllElements();
+        try {
+
+            String sql = "select * from tbl_cliente";
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            System.out.println(rs.getString("Nome"));
+            lista.clear();
+            while (rs.next()) {
+                Cliente clien = new Cliente();
+                clien.setId(rs.getInt("Id_Cliente"));
+                clien.setNome(rs.getString("Nome"));
+                clien.setTelefone(rs.getString("Telefone"));
+                clien.setCPF(rs.getString("CPF"));
+                clien.setEmail(rs.getString("Email"));
+                clien.setEndereço(rs.getString("Endereço"));
+                clien.setPlaca(rs.getString("Placa"));
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro no atualizar 01: " + e);
+        } finally {
+            try {
+                pstm.close();
+                rs.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro no atualizar: " + e);
+            }
+        }
+
+        for (Cliente c : lista) {
+            Object[] dados = {c.getId(), c.getNome(), c.getTelefone(), c.getCPF(), c.getEmail(), c.getEndereço(), c.getPlaca()};
+            model.addRow(dados);
+        } 
+    }
 
     /**
      * @param args the command line arguments
@@ -121,16 +208,24 @@ public class VerCliente extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VerCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VerCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VerCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VerCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -143,10 +238,10 @@ public class VerCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotaodeletaCliente;
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblCliente;
     // End of variables declaration//GEN-END:variables
 }

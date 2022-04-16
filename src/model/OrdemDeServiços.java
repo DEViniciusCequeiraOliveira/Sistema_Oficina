@@ -10,7 +10,7 @@ package model;
  *
  * @author ALUNO
  */
-public class OrdemDeServiços extends Orçamento {
+public class OrdemDeServiços extends Orcamento {
     
     /*public OrdemDeServiços(String CpfCliente, String CpfMecanico, Double valor, String serviços) {
         super(CpfCliente, CpfMecanico, valor, serviços);

@@ -5,11 +5,25 @@
  */
 package view;
 
+import dal.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Orcamento;
+
 /**
  *
  * @author janae
  */
 public class OrdemDeServico extends javax.swing.JFrame {
+
+    Connection conn = new Conexao().connect();
+    PreparedStatement pstm;
+    ResultSet rs;
 
     /**
      * Creates new form OrdemDeServico
@@ -30,12 +44,12 @@ public class OrdemDeServico extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnConcluir = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblOrdemServ = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ver Ordem de Serviços");
@@ -54,12 +68,12 @@ public class OrdemDeServico extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/calcular 128px.png"))); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton1.setText("Deletar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDeletar.setBackground(new java.awt.Color(204, 204, 204));
+        btnDeletar.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnDeletarActionPerformed(evt);
             }
         });
 
@@ -71,14 +85,24 @@ public class OrdemDeServico extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(204, 204, 204));
-        jButton4.setText("Concluir");
+        btnConcluir.setBackground(new java.awt.Color(204, 204, 204));
+        btnConcluir.setText("Concluir");
+        btnConcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConcluirActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(204, 204, 204));
         jButton5.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButton5.setText("Pendentes");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblOrdemServ.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -86,7 +110,16 @@ public class OrdemDeServico extends javax.swing.JFrame {
                 "ID", "CPF Cliente", "CPF Mecanico", "Valor", "Serviço"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblOrdemServ.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tblOrdemServAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tblOrdemServ);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,11 +133,11 @@ public class OrdemDeServico extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(32, 32, 32)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(34, 34, 34)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnConcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton5)))))
                 .addContainerGap(35, Short.MAX_VALUE))
@@ -125,9 +158,9 @@ public class OrdemDeServico extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnDeletar)
                     .addComponent(jButton2)
-                    .addComponent(jButton4)
+                    .addComponent(btnConcluir)
                     .addComponent(jButton5))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,13 +178,103 @@ public class OrdemDeServico extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        DefaultTableModel dtmTabela = (DefaultTableModel) tblOrdemServ.getModel();
+        Object id = dtmTabela.getValueAt(tblOrdemServ.getSelectedRow(), 0);
+        try {
+            String sql = "delete from tbl_orçamento where Id_Orçamento = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setObject(1, id);
+            pstm.execute();
+            pstm.close();
+            JOptionPane.showMessageDialog(null, "Deletado");
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tblOrdemServ.getModel();
+        ArrayList<Orcamento> lista = new ArrayList();
+        model.getDataVector().removeAllElements();
+        try {
+
+            String sql = "select * from tbl_orçamento where Pronto = 1";
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            lista.clear();
+            while (rs.next()) {
+                Orcamento orca = new Orcamento();
+                orca.setId_orcamento(rs.getInt("Id_Orçamento"));
+                orca.setValor(rs.getDouble("Valor"));
+                orca.setCpfCliente(rs.getString("CPF_Cliente"));
+                orca.setCpfMecanico(rs.getString("CPF_Mecanico"));
+                orca.setServiços(rs.getString("Serviço"));
+                lista.add(orca);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+        for (Orcamento o : lista) {
+            Object[] dados = {o.getId_orcamento(), o.getValor(), o.getCpfCliente(), o.getCpfMecanico(), o.getServiços()};
+            model.addRow(dados);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tblOrdemServAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblOrdemServAncestorAdded
+        atualizarTabela();
+    }//GEN-LAST:event_tblOrdemServAncestorAdded
+
+    private void btnConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConcluirActionPerformed
+        DefaultTableModel dtmTabela = (DefaultTableModel) tblOrdemServ.getModel();
+        Object id = dtmTabela.getValueAt(tblOrdemServ.getSelectedRow(), 0);
+        try {
+            String sql = "update tbl_orçamento set Pronto = true  where Id_Orçamento = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setObject(1, id);
+            pstm.execute();
+            pstm.close();
+            JOptionPane.showMessageDialog(null, "Concluido");
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btnConcluirActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        atualizarTabela();  
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    public void atualizarTabela() {
+        DefaultTableModel model = (DefaultTableModel) tblOrdemServ.getModel();
+        ArrayList<Orcamento> lista = new ArrayList();
+        model.getDataVector().removeAllElements();
+        try {
+
+            String sql = "select * from tbl_orçamento where Pronto = 0";
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            lista.clear();
+            while (rs.next()) {
+                Orcamento orca = new Orcamento();
+                orca.setId_orcamento(rs.getInt("Id_Orçamento"));
+                orca.setValor(rs.getDouble("Valor"));
+                orca.setCpfCliente(rs.getString("CPF_Cliente"));
+                orca.setCpfMecanico(rs.getString("CPF_Mecanico"));
+                orca.setServiços(rs.getString("Serviço"));
+                lista.add(orca);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+        for (Orcamento o : lista) {
+            Object[] dados = {o.getId_orcamento(), o.getValor(), o.getCpfCliente(), o.getCpfMecanico(), o.getServiços()};
+            model.addRow(dados);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -167,16 +290,24 @@ public class OrdemDeServico extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OrdemDeServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrdemDeServico.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OrdemDeServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrdemDeServico.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OrdemDeServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrdemDeServico.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OrdemDeServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrdemDeServico.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -189,14 +320,14 @@ public class OrdemDeServico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnConcluir;
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblOrdemServ;
     // End of variables declaration//GEN-END:variables
 }
