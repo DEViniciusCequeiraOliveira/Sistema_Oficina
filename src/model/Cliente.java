@@ -11,7 +11,6 @@ package model;
  * @author ALUNO
  */
 public class Cliente extends Pessoa {
-    
     private String email;
     private String telefone;
     private String endereço;
@@ -70,8 +69,6 @@ public class Cliente extends Pessoa {
 
     public void setCPF(String CPF) {
         this.CPF = CPF;
-    }
-
-   
+    }  
    
 }
