@@ -6,6 +6,7 @@
 package view;
 
 import dal.Conexao;
+import java.awt.Toolkit;
 import model.Orcamento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,6 +32,8 @@ public class CadastraOrcamentos extends javax.swing.JFrame {
      */
     public CadastraOrcamentos() {
         initComponents();
+        setIcon();
+
     }
 
     /**
@@ -364,7 +367,7 @@ public class CadastraOrcamentos extends javax.swing.JFrame {
                 lista.add(orca);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Atualizar tabela" + e);
+            JOptionPane.showMessageDialog(null, "Atualizar tabela" + e);
         }
 
         for (model.Orcamento o : lista) {
@@ -448,4 +451,9 @@ public class CadastraOrcamentos extends javax.swing.JFrame {
     private javax.swing.JTextField txtServico;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("assets/essavai.png")));
+    }
+
 }

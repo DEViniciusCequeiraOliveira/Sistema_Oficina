@@ -5,6 +5,8 @@
  */
 package view;
 
+import java.awt.Toolkit;
+
 /**
  *
  * @author janae
@@ -16,6 +18,7 @@ public class TelaMecanico extends javax.swing.JFrame {
      */
     public TelaMecanico() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -185,4 +188,8 @@ public class TelaMecanico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("assets/essavai.png")));
+    }
 }
