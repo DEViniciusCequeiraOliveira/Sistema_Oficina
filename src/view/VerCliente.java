@@ -153,7 +153,7 @@ public class VerCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Deletado");
             atualizarTabela();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"erro: " + e);
+            JOptionPane.showMessageDialog(null, "erro: " + e);
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
@@ -166,7 +166,6 @@ public class VerCliente extends javax.swing.JFrame {
             String sql = "select * from tbl_cliente";
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
-            System.out.println(rs.getString("Nome"));
             while (rs.next()) {
                 Cliente clien = new Cliente();
                 clien.setId(rs.getInt("Id_Cliente"));
@@ -176,23 +175,16 @@ public class VerCliente extends javax.swing.JFrame {
                 clien.setEmail(rs.getString("Email"));
                 clien.setEndereço(rs.getString("Endereço"));
                 clien.setPlaca(rs.getString("Placa"));
+                lista.add(clien);
             }
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Erro no atualizar 01: " + e);
-        } finally {
-            try {
-                pstm.close();
-                rs.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Erro no atualizar: " + e);
-            }
-        }
 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro no atualizar 01: " + e);
+        }
         for (Cliente c : lista) {
             Object[] dados = {c.getId(), c.getNome(), c.getTelefone(), c.getCPF(), c.getEmail(), c.getEndereço(), c.getPlaca()};
             model.addRow(dados);
-        } 
+        }
     }
 
     /**
