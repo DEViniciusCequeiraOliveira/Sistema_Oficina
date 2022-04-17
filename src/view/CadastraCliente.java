@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Cliente;
+
 /**
  *
  * @author janae
@@ -91,6 +92,11 @@ public class CadastraCliente extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(204, 204, 204));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton4.setText("Editar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(204, 204, 204));
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -104,6 +110,11 @@ public class CadastraCliente extends javax.swing.JFrame {
         jButton6.setBackground(new java.awt.Color(204, 204, 204));
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton6.setText("Limpar Campos");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/Clientes 128px.png"))); // NOI18N
 
@@ -165,6 +176,11 @@ public class CadastraCliente extends javax.swing.JFrame {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        tblClient.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblClient);
@@ -283,7 +299,19 @@ public class CadastraCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel dtmTabela = (DefaultTableModel) tblClient.getModel();
+        Object id = dtmTabela.getValueAt(tblClient.getSelectedRow(), 0);
+        try {
+            String sql = "delete from tbl_cliente where Id_Cliente = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setObject(1, id);
+            pstm.execute();
+            pstm.close();
+            JOptionPane.showMessageDialog(null, "Deletado");
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
@@ -302,10 +330,54 @@ public class CadastraCliente extends javax.swing.JFrame {
         clien.setEndereço(txtEndereco.getText());
         clien.setPlaca(txtPlacaVeiculo.getText());
 
-        cadastrarClient(clien.getNome(), clien.getTelefone(), clien.getCPF(), clien.getEmail(), clien.getEndereço() , clien.getPlaca());
-        
+        cadastrarClient(clien.getNome(), clien.getTelefone(), clien.getCPF(), clien.getEmail(), clien.getEndereço(), clien.getPlaca());
+
         atualizarTabela();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            DefaultTableModel model = (DefaultTableModel) tblClient.getModel();
+            int selectedRowIndex = tblClient.getSelectedRow();
+
+            String sql = " UPDATE tbl_cliente SET Nome = ?, Telefone = ?, CPF = ?, Email = ?, Endereço = ?, Placa = ? WHERE Id_Cliente = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, txtNome.getText());
+            pstm.setString(2, txtTelefone.getText());
+            pstm.setString(3, txtCPF.getText());
+            pstm.setString(4, txtEmail.getText());
+            pstm.setString(5, txtEndereco.getText());
+            pstm.setString(6, txtPlacaVeiculo.getText());
+            pstm.setString(7, model.getValueAt(selectedRowIndex, 0).toString());
+            JOptionPane.showMessageDialog(null, "Atualizado");
+
+            pstm.execute();
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void tblClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientMouseClicked
+        DefaultTableModel model = (DefaultTableModel) tblClient.getModel();
+        int selectedRowIndex = tblClient.getSelectedRow();
+
+        txtNome.setText(model.getValueAt(selectedRowIndex, 1).toString());
+        txtTelefone.setText(model.getValueAt(selectedRowIndex, 2).toString());
+        txtCPF.setText(model.getValueAt(selectedRowIndex, 3).toString());
+        txtEmail.setText(model.getValueAt(selectedRowIndex, 4).toString());
+        txtEndereco.setText(model.getValueAt(selectedRowIndex, 5).toString());
+        txtPlacaVeiculo.setText(model.getValueAt(selectedRowIndex, 6).toString());
+    }//GEN-LAST:event_tblClientMouseClicked
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        txtNome.setText("");
+        txtTelefone.setText("");
+        txtEmail.setText("");
+        txtCPF.setText("");
+        txtPlacaVeiculo.setText("");
+        txtEndereco.setText("");
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) tblClient.getModel();

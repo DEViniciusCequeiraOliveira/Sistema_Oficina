@@ -5,11 +5,25 @@
  */
 package view;
 
+import dal.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author janae
  */
 public class Orcamento extends javax.swing.JFrame {
+
+    model.Orcamento orc = new model.Orcamento();
+    Connection conn = new Conexao().connect();
+    PreparedStatement pstm;
+    ResultSet rs;
 
     /**
      * Creates new form Orcamento
@@ -33,7 +47,7 @@ public class Orcamento extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblOrc = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ver Orçamentos");
@@ -52,14 +66,24 @@ public class Orcamento extends javax.swing.JFrame {
         jLabel1.setText("Orçamentos");
 
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
-        jButton2.setText("Deletar Ordem");
+        jButton2.setText("Deletar Orçamento");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setText("Gera Ordem de Serviço");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/assets/calcular 128px.png"))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblOrc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -67,7 +91,16 @@ public class Orcamento extends javax.swing.JFrame {
                 "ID", "CPF Cliente", "CPF Mecanico", "Valor", "Serviço"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblOrc.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tblOrcAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tblOrc);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,6 +155,71 @@ public class Orcamento extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        DefaultTableModel dtmTabela = (DefaultTableModel) tblOrc.getModel();
+        Object id = dtmTabela.getValueAt(tblOrc.getSelectedRow(), 0);
+        try {
+            String sql = "delete from tbl_orçamento where Id_Orçamento = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setObject(1, id);
+            pstm.execute();
+            pstm.close();
+            JOptionPane.showMessageDialog(null, "Deletado");
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tblOrcAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblOrcAncestorAdded
+        atualizarTabela();
+    }//GEN-LAST:event_tblOrcAncestorAdded
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        DefaultTableModel dtmTabela = (DefaultTableModel) tblOrc.getModel();
+        Object id = dtmTabela.getValueAt(tblOrc.getSelectedRow(), 0);
+        try {
+            String sql = "update tbl_orçamento set OrdemServico = 1 where Id_Orçamento = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setObject(1, id);
+            pstm.execute();
+            pstm.close();
+            JOptionPane.showMessageDialog(null, "Concluido");
+            atualizarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    public void atualizarTabela() {
+        DefaultTableModel model = (DefaultTableModel) tblOrc.getModel();
+        ArrayList<model.Orcamento> lista = new ArrayList();
+        model.getDataVector().removeAllElements();
+        try {
+
+            String sql = "select * from tbl_orçamento where OrdemServico = 0";
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            lista.clear();
+            while (rs.next()) {
+                model.Orcamento orca = new model.Orcamento();
+                orca.setId_orcamento(rs.getInt("Id_Orçamento"));
+                orca.setValor(rs.getString("Valor"));
+                orca.setCpfCliente(rs.getString("CPF_Cliente"));
+                orca.setCpfMecanico(rs.getString("CPF_Mecanico"));
+                orca.setServiços(rs.getString("Serviço"));
+                lista.add(orca);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Atualizar tabela" + e);
+        }
+
+        for (model.Orcamento o : lista) {
+            Object[] dados = {o.getId_orcamento(), o.getCpfCliente(), o.getCpfMecanico(), o.getValor(), o.getServiços()};
+            model.addRow(dados);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -164,6 +262,6 @@ public class Orcamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblOrc;
     // End of variables declaration//GEN-END:variables
 }
