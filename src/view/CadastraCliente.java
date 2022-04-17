@@ -382,13 +382,12 @@ public class CadastraCliente extends javax.swing.JFrame {
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) tblClient.getModel();
         ArrayList<Cliente> lista = new ArrayList();
-        model.getDataVector().removeAllElements();
+        model.setRowCount(0);
         try {
 
             String sql = "select * from tbl_cliente";
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
-            //lista.clear();
             while (rs.next()) {
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("Id_Cliente"));

@@ -434,13 +434,12 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) tblFunc.getModel();
         ArrayList<Funcionario> lista = new ArrayList();
-        model.getDataVector().removeAllElements();
+        model.setRowCount(0);
         try {
 
             String sql = "select * from tbl_funcionario";
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
-            lista.clear();
             while (rs.next()) {
                 Funcionario funcionario = new Funcionario();
                 funcionario.setId(rs.getInt("Id_Funcionario"));

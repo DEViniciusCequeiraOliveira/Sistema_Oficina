@@ -194,13 +194,12 @@ public class Orcamento extends javax.swing.JFrame {
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) tblOrc.getModel();
         ArrayList<model.Orcamento> lista = new ArrayList();
-        model.getDataVector().removeAllElements();
+        model.setRowCount(0);
         try {
 
             String sql = "select * from tbl_orçamento where OrdemServico = 0";
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
-            lista.clear();
             while (rs.next()) {
                 model.Orcamento orca = new model.Orcamento();
                 orca.setId_orcamento(rs.getInt("Id_Orçamento"));

@@ -197,13 +197,12 @@ public class OrdemDeServico extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         DefaultTableModel model = (DefaultTableModel) tblOrdemServ.getModel();
         ArrayList<Orcamento> lista = new ArrayList();
-        model.getDataVector().removeAllElements();
+        model.setRowCount(0);
         try {
 
             String sql = "select * from tbl_orçamento where Pronto = 1 and OrdemServico = 1";
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
-            lista.clear();
             while (rs.next()) {
                 Orcamento orca = new Orcamento();
                 orca.setId_orcamento(rs.getInt("Id_Orçamento"));
@@ -244,19 +243,18 @@ public class OrdemDeServico extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConcluirActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        atualizarTabela();  
+        atualizarTabela();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) tblOrdemServ.getModel();
         ArrayList<Orcamento> lista = new ArrayList();
-        model.getDataVector().removeAllElements();
+        model.setRowCount(0);
         try {
 
             String sql = "select * from tbl_orçamento where OrdemServico = 1 and Pronto = 0";
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
-            lista.clear();
             while (rs.next()) {
                 Orcamento orca = new Orcamento();
                 orca.setId_orcamento(rs.getInt("Id_Orçamento"));

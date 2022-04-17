@@ -158,14 +158,13 @@ public class VerCliente extends javax.swing.JFrame {
     public void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) tblCliente.getModel();
         ArrayList<Cliente> lista = new ArrayList();
-        model.getDataVector().removeAllElements();
+        model.setRowCount(0);
         try {
 
             String sql = "select * from tbl_cliente";
             pstm = conn.prepareStatement(sql);
             rs = pstm.executeQuery();
             System.out.println(rs.getString("Nome"));
-            lista.clear();
             while (rs.next()) {
                 Cliente clien = new Cliente();
                 clien.setId(rs.getInt("Id_Cliente"));
