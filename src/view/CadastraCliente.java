@@ -6,6 +6,7 @@
 package view;
 
 import dal.Conexao;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Cliente;
+
+
 
 /**
  *
@@ -32,6 +35,7 @@ public class CadastraCliente extends javax.swing.JFrame {
      */
     public CadastraCliente() {
         initComponents();
+        setIcon();      
     }
 
     /**
@@ -488,4 +492,10 @@ public class CadastraCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtPlacaVeiculo;
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
+
+    public final void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("assets/essavai.png")));
+    }
+
+   
 }

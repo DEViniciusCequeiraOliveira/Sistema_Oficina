@@ -4,6 +4,8 @@
  */
 package view;
 
+import java.awt.Toolkit;
+
 /**
  *
  * @author Levi
@@ -15,6 +17,7 @@ public class TelaRecepcionista extends javax.swing.JFrame {
      */
     public TelaRecepcionista() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -174,4 +177,8 @@ public class TelaRecepcionista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("assets/essavai.png")));
+    }
 }

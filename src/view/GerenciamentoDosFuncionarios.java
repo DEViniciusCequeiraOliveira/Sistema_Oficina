@@ -6,6 +6,7 @@
 package view;
 
 import dal.Conexao;
+import java.awt.Toolkit;
 import model.Funcionario;
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
      */
     public GerenciamentoDosFuncionarios() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -522,5 +524,9 @@ public class GerenciamentoDosFuncionarios extends javax.swing.JFrame {
 
     private void btnAtendente(boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("assets/essavai.png")));
     }
 }

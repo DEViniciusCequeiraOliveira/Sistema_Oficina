@@ -6,6 +6,7 @@
 package view;
 
 import dal.Conexao;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,6 +31,7 @@ public class OrdemDeServico extends javax.swing.JFrame {
      */
     public OrdemDeServico() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -328,4 +330,9 @@ public class OrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblOrdemServ;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("assets/essavai.png")));
+    }
+    
 }

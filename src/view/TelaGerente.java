@@ -5,6 +5,8 @@
  */
 package view;
 
+import java.awt.Toolkit;
+
 /**
  *
  * @author janae
@@ -16,6 +18,7 @@ public class TelaGerente extends javax.swing.JFrame {
      */
     public TelaGerente() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -226,4 +229,8 @@ public class TelaGerente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("assets/essavai.png")));
+    }
 }

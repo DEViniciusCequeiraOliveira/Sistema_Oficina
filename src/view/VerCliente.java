@@ -6,6 +6,7 @@
 package view;
 
 import dal.Conexao;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,6 +31,7 @@ public class VerCliente extends javax.swing.JFrame {
      */
     public VerCliente() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -235,4 +237,8 @@ public class VerCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCliente;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("assets/essavai.png")));
+    }
 }
