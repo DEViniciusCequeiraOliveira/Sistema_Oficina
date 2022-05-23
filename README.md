@@ -17,10 +17,10 @@ O sistema possibilita cadastrar clientes, funcionarios, orçamentos e ordem de s
 **Para executar este projeto você precisa:**
 
 - Ter o [JDK 17 ou superior](https://www.oracle.com/java/technologies/downloads/) instalado na sua máquina.
-- Ter o [sqlite-jdbc](https://github.com/xerial/sqlite-jdbc/releases).
+- Ter o [sqlite-jdbc](https://github.com/xerial/sqlite-jdbc/releases) configurado na IDE.
 - Ter algum editor de códigos ou IDE como o [NetBeans](https://netbeans.apache.org/download/nb13/nb13.html). 
 
-Caso opte por utilizar o NetBeans, o processo de execução do aplicativo funcionará através de um botão de play na parte superior que ambas dispõem. Outra forma é abrindo a pasta `dist` e em seguida executar o arquivo `Oficina.jar`.
+Caso opte por utilizar o JDK 17 ou superior, o processo de execução do aplicativo funcionará abrindo a pasta `dist` e em seguida executar o arquivo `Oficina.jar`. Caso contrário deverá instalar o NetBeans e configurar o `sqlite-jdbc`, o processo de execução do aplicativo funcionará através de um botão de play na parte superior que ambas dispõem.
 
 Logins (Usuario / Senha):
 - Gerente: Levi / 123
